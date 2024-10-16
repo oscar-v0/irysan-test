@@ -5,7 +5,7 @@
 
 ### Testing the application
 
-Simply run `curl localhost:8080/stats`
+Simply run `curl localhost:8080/data/stats`
 
 ### Using Postman
 
