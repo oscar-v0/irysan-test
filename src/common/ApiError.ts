@@ -5,9 +5,16 @@ export type ApiErrorParams = {
 };
 
 export default class ApiError {
-  static ifNull(value: any, params: ApiErrorParams) {
-    if (value != null) return value;
-    throw new ApiError(params);
+  static notFoundIfNull = this.ifNull({status: 404, message: 'Not Found'});
+
+  static ifNull<T>(params: ApiErrorParams) {
+    return (value: T | null | undefined) => {
+      if (value === null) {
+        throw new ApiError(params);
+      }
+
+      return value;
+    };
   }
 
   public readonly message: string;
@@ -17,6 +24,6 @@ export default class ApiError {
   constructor(params: {status: number; message?: string; data?: any}) {
     this.message = params.message || `API error ${params.status}`;
     this.status = params.status;
-    this.data = params.data;
+    this.data = {status: this.status, message: this.message};
   }
 }

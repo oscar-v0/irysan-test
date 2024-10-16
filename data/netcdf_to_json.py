@@ -16,7 +16,7 @@ if __name__ == "__main__":
             for lon in dataset.variables['lon'][::100]:
                 pm = dataset.variables['GWRPM25'][lat, lon].item()
                 if np.isfinite(pm):
-                    data.append({'lat': lat, 'lon': lon, 'pm': pm})
+                    data.append({'lat': lat, 'lon': lon, 'pm': pm, 'year': 2000})
 
 
     with open(getfilename("sdei.json"), 'w') as output:

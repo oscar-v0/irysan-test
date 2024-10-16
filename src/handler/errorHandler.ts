@@ -1,9 +1,17 @@
 import {ErrorRequestHandler} from 'express';
+import {ZodError} from 'zod';
 import ApiError from '../common/ApiError';
 
 const createApiError = (e: any) => {
   if (e instanceof ApiError) {
     return e;
+  }
+
+  if (e instanceof ZodError) {
+    return new ApiError({
+      status: 400,
+      message: `${e.issues[0].path}: ${e.issues[0].message}`,
+    });
   }
 
   return new ApiError({
