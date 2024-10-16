@@ -1,12 +1,8 @@
 import _ from 'lodash';
-import raw from '../../../data/sdei.json';
 import {DataDto} from '../../dto';
 
-type RawDataFrame = (typeof raw)[number];
-type DataFrame = RawDataFrame & {id: number};
-
-const map: Record<number, DataFrame | null> = {};
-const data: DataFrame[] = [];
+const data: DataDto.DataFrame[] = [];
+const map: Record<number, DataDto.DataFrame | null> = {};
 
 // ------------------------------------------------------------------------------------------
 
@@ -16,7 +12,7 @@ const getNextId = () => {
 
 // ------------------------------------------------------------------------------------------
 
-export const initialize = () => {
+export const initialize = (raw: DataDto.RawDataFrame[]) => {
   if (data.length === 0) {
     data.push(...raw.map((d, id) => (map[id] = {id, ...d})));
   }
@@ -24,7 +20,7 @@ export const initialize = () => {
 
 // ------------------------------------------------------------------------------------------
 
-export const getAll = () => {
+export const getAll = async () => {
   return data;
 };
 

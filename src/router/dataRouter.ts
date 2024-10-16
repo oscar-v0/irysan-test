@@ -5,8 +5,8 @@ import Data from '../service/Data';
 
 export default express
   .Router()
-  .get('/', (_, res) => {
-    res.json(Data.getAll());
+  .get('/', async (_, res) => {
+    res.json(await Data.getAll());
   })
   .get('/filter', async (req, res) => {
     res.json(await Data.getMany(DataDto.GetManyParams.parse(req.query)));
